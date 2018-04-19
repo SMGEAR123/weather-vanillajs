@@ -1,6 +1,18 @@
 function getWeather(){
 console.log('getting weather')
 
+var weatherDiv = document.querySelector('.weather');
+
+var weatherImage = document.querySelector('.weather-image');
+
+var locationHeader = document.querySelector('.location');
+
+var tempParagraph = document.querySelector('.temp');
+
+var weatherParagraph = document.querySelector('.weather-type');
+
+
+
 
 /* Getting location information  using built in geolocation for HTML5  Source: https://www.w3schools.com/html/html5_geolocation.asp */
   function getLocation() {
@@ -45,7 +57,18 @@ getLocation();
         if(xmlHttp.readyState === 4 && xmlHttp.status === 200) {
           console.log('Request is DONE and was successful!')
           var response = JSON.parse(xmlHttp.responseText);
-          console.log(response)
+          console.log(response);
+
+          weatherImage.src = response.weather[0].icon;
+
+          weatherImage.alt = response.weather[0].description;
+
+          locationHeader.innerText = response.name;
+
+          tempParagraph.innerText = response.main.temp;
+
+          weatherParagraph.innerText = response.weather[0].description.toUpperCase();
+
         }
 
       }

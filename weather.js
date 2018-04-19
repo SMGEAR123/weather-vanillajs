@@ -11,8 +11,10 @@ var tempParagraph = document.querySelector('.temp');
 
 var weatherParagraph = document.querySelector('.weather-type');
 
+var measure = document.querySelector('.measure');
 
-
+var celciusButton = document.querySelector('.celcius-button');
+var buttonFlag = false;
 
 /* Getting location information  using built in geolocation for HTML5  Source: https://www.w3schools.com/html/html5_geolocation.asp */
   function getLocation() {
@@ -53,6 +55,7 @@ getLocation();
       function processRequest(e) {
         console.log(xmlHttp.readyState);
         console.log(xmlHttp.status);
+
  /* Checking for readyState 4 */
         if(xmlHttp.readyState === 4 && xmlHttp.status === 200) {
           console.log('Request is DONE and was successful!')
@@ -68,6 +71,31 @@ getLocation();
           tempParagraph.innerText = response.main.temp;
 
           weatherParagraph.innerText = response.weather[0].description.toUpperCase();
+
+/* Click event to change the measure */
+          celciusButton.addEventListener('click', function changeMeasure(){
+
+              console.log('Changing from Celcius to Fahrenheit');
+              var tempValue = parseFloat(response.main.temp);
+              console.log(tempValue);
+              var fahrenheit = (tempValue * 1.8 + 32);
+              console.log(fahrenheit);
+
+              tempParagraph.innerText = fahrenheit.toFixed(2);
+
+              /* Code to change the symbol to Fahrenheit in the button Source: https://stackoverflow.com/questions/7394748/whats-the-right-way-to-decode-a-string-that-has-special-html-entities-in-it*/
+
+              function decodeHTML(html){
+                celciusButton.innerHTML = html;
+                return celciusButton.value;
+              }
+
+              decodeHTML('Measure: &#8457;');
+
+            });
+
+
+
 
         }
 
